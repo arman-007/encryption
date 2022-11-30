@@ -40,9 +40,22 @@ if __name__ == '__main__':
 
         return ka
 
-    def xor_ing(plaintext:str, key:str):
-        xorED_text = int(bin_plaintext) ^ int(bin_key)
-        print(bin(xorED_text)[2:])
+    def xor_ing(plaintext:str, key:str, length):
+        ans = ""
+     
+        # Loop to iterate over the
+        # Binary Strings
+        for i in range(length):
+            
+            # If the Character matches
+            if (plaintext[i] == key[i]):
+                ans += "1"
+            else:
+                ans += "0"
+        # print(ans)
+        # print(len(ans))
+
+        return ans
 
     key = DH()
 
@@ -72,7 +85,7 @@ if __name__ == '__main__':
     """
     bin_key = (bin_text_length-len(str(bin(key)[2:])))*'0' + str(bin(key)[2:])
 
-    xor_ing(bin_plaintext, bin_key)
+    xor_ing(bin_plaintext, bin_key, bin_text_length)
     # print(len(bin_key))
     # print(bin_text_length)
     # print(type(bin_plaintext))
