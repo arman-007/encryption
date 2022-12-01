@@ -1,4 +1,6 @@
 from random import randint
+# import time 
+# start = time.time()
 
 if __name__ == '__main__':
 
@@ -95,7 +97,7 @@ if __name__ == '__main__':
 
     # print(bin_key)
 
-    plaintext = "hi"
+    plaintext = "Networking"
 
     # ascii_num = list(map(ord,plaintext))
     # print(ascii_num)
@@ -124,7 +126,10 @@ if __name__ == '__main__':
     # print(oneBitShiftedBinaryString)
     oneComplimentedString = onesCompliment(oneBitShiftedBinaryString)
     swappedString = swap(oneComplimentedString)
-    print(swappedString)
+    # print(swappedString)
     # print(len(bin_key))
     # print(bin_text_length)
     # print(type(bin_plaintext))
+
+# end = time.time()
+# print("The time of execution of above program is :",(end-start) * 10**3, "ms")
