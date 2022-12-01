@@ -66,22 +66,30 @@ if __name__ == '__main__':
         bin_valued_list[len(bin_valued_list)-1] = '0'
         # print(bin_valued_list)
         rightShiftedBinaryString = ''.join(map(str,bin_valued_list))
-        print(rightShiftedBinaryString)
+        # print(rightShiftedBinaryString)
+        return rightShiftedBinaryString
 
     def flip(c):
         return '1' if (c == '0') else '0'
 
     def onesCompliment(binString):
+        # print(binString)
         binList = list(binString.strip())
+        # print(binList)
         length = len(binList)
         ones = ""
 
         for i in range(length):
             ones += flip(binList[i])
-
-        print(ones)
+        # print(ones)
         return ones
 
+    def swap(bitString):
+        x = len(bitString)
+        set1 = bitString[slice(0, len(bitString)//2)]
+        set2 = bitString[slice(len(bitString)//2, len(bitString))]
+        swappedString = set2 + set1
+        return swappedString
 
     key = DH()
 
@@ -113,7 +121,10 @@ if __name__ == '__main__':
 
     xnored_text = xnor_ing(bin_plaintext, bin_key, bin_text_length)
     oneBitShiftedBinaryString = left_shift1(xnored_text)
-    onesCompliment(oneBitShiftedBinaryString)
+    # print(oneBitShiftedBinaryString)
+    oneComplimentedString = onesCompliment(oneBitShiftedBinaryString)
+    swappedString = swap(oneComplimentedString)
+    print(swappedString)
     # print(len(bin_key))
     # print(bin_text_length)
     # print(type(bin_plaintext))
