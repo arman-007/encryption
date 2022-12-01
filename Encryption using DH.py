@@ -40,12 +40,12 @@ if __name__ == '__main__':
 
         return ka
 
-    def xor_ing(plaintext:str, key:str, length):
+    def xnor_ing(plaintext:str, key:str, len):
         ans = ""
      
         # Loop to iterate over the
         # Binary Strings
-        for i in range(length):
+        for i in range(len):
             
             # If the Character matches
             if (plaintext[i] == key[i]):
@@ -54,8 +54,34 @@ if __name__ == '__main__':
                 ans += "0"
         # print(ans)
         # print(len(ans))
-
         return ans
+
+    def left_shift1(bin_valued_str):
+
+        # print(bin_valued_str)
+        bin_valued_list = list(bin_valued_str.strip())
+        # print(bin_valued_list)
+        for i in range(len(bin_valued_list)-1):
+            bin_valued_list[i] = bin_valued_list[i+1]
+        bin_valued_list[len(bin_valued_list)-1] = '0'
+        # print(bin_valued_list)
+        rightShiftedBinaryString = ''.join(map(str,bin_valued_list))
+        print(rightShiftedBinaryString)
+
+    def flip(c):
+        return '1' if (c == '0') else '0'
+
+    def onesCompliment(binString):
+        binList = list(binString.strip())
+        length = len(binList)
+        ones = ""
+
+        for i in range(length):
+            ones += flip(binList[i])
+
+        print(ones)
+        return ones
+
 
     key = DH()
 
@@ -85,7 +111,9 @@ if __name__ == '__main__':
     """
     bin_key = (bin_text_length-len(str(bin(key)[2:])))*'0' + str(bin(key)[2:])
 
-    xor_ing(bin_plaintext, bin_key, bin_text_length)
+    xnored_text = xnor_ing(bin_plaintext, bin_key, bin_text_length)
+    oneBitShiftedBinaryString = left_shift1(xnored_text)
+    onesCompliment(oneBitShiftedBinaryString)
     # print(len(bin_key))
     # print(bin_text_length)
     # print(type(bin_plaintext))
