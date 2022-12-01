@@ -1,4 +1,4 @@
-from random import randint
+
 # import time 
 # start = time.time()
 
@@ -97,7 +97,7 @@ if __name__ == '__main__':
 
     # print(bin_key)
 
-    plaintext = "Networking"
+    plaintext = "hi"
 
     # ascii_num = list(map(ord,plaintext))
     # print(ascii_num)
@@ -126,7 +126,7 @@ if __name__ == '__main__':
     # print(oneBitShiftedBinaryString)
     oneComplimentedString = onesCompliment(oneBitShiftedBinaryString)
     swappedString = swap(oneComplimentedString)
-    # print(swappedString)
+    print(swappedString)
     # print(len(bin_key))
     # print(bin_text_length)
     # print(type(bin_plaintext))
