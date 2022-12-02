@@ -87,6 +87,21 @@ if __name__ == '__main__':
         # print(len(ans))
         return ans
 
+    def splitIntoChunks (cipher):
+        n = 8 #length of chunk
+        chunks = [cipher[i:i+n] for i in range(0, len(cipher), n)]
+        return chunks
+
+    def binaryToDecimal(n):
+        return int(n,2)
+
+    def binCipherToPlaintext (cipher):
+        msg = ""
+        for bin_num in cipher:
+            asciiChar = binaryToDecimal(bin_num)
+            msg += chr(asciiChar)
+        return msg
+
     cipherText = "1100000111010000"
     cipherLength = len(cipherText)
 
@@ -98,4 +113,11 @@ if __name__ == '__main__':
     onesComplimented = onesCompliment(swappedCipherText)
     leftShiftedCipher = left_shift1(onesComplimented)
     xnoredCipher = xnor_ing(leftShiftedCipher, bin_key, cipherLength)
-    print(len(xnoredCipher))
+    chunksOfCipher = splitIntoChunks(xnoredCipher)
+    plainText = binCipherToPlaintext (chunksOfCipher)
+    print(plainText)
+
+    # print(chunksOfCipher)
+
+    #0110100001101001
+    #1101001011011000

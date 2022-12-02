@@ -112,6 +112,8 @@ if __name__ == '__main__':
             ascii_bin_list[ascii_bin_list.index(element)] = (8-len(element))*'0'+element
 
     bin_plaintext = ''.join(ascii_bin_list)
+    # print(bin_plaintext) 
+    # 0110100001101001
 
     bin_text_length = len(bin_plaintext)
 
