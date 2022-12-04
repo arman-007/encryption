@@ -37,6 +37,19 @@ if __name__ == '__main__':
 
         return ka
 
+    def cipherTextToBinary (cipherText):
+        ascii_str = ' '.join(list(map(str, map(ord, cipherText))))
+        ascii_str_list = ascii_str.split()
+        ascii_int_list = list(map(int, ascii_str_list))
+        ascii_bin_list = [bin(num)[2:] for num in ascii_int_list]
+
+        for element in ascii_bin_list:
+            if len(element) < 8:
+                ascii_bin_list[ascii_bin_list.index(element)] = (8-len(element))*'0'+element
+
+        bin_ciphertext = ''.join(ascii_bin_list)
+        return bin_ciphertext
+
     def swap(bitString):
         x = len(bitString)
         set1 = bitString[slice(0, len(bitString)//2)]
@@ -59,13 +72,16 @@ if __name__ == '__main__':
         # print(ones)
         return ones
 
-    def left_shift1(bin_valued_str):
+    def right_shift1(bin_valued_str):
         # print(bin_valued_str)
         bin_valued_list = list(bin_valued_str.strip())
         # print(bin_valued_list)
-        for i in range(len(bin_valued_list)-1):
-            bin_valued_list[i] = bin_valued_list[i+1]
-        bin_valued_list[len(bin_valued_list)-1] = '0'
+        i = len(bin_valued_list) - 2
+        # print(i)
+        while i >= 1:
+            bin_valued_list[i+1] = bin_valued_list[i]
+            i -= 1
+        bin_valued_list[0] = '1'
         # print(bin_valued_list)
         rightShiftedBinaryString = ''.join(map(str,bin_valued_list))
         # print(rightShiftedBinaryString)
@@ -73,7 +89,7 @@ if __name__ == '__main__':
 
     def xnor_ing(plaintext:str, key:str, len):
         ans = ""
-     
+
         # Loop to iterate over the
         # Binary Strings
         for i in range(len):
@@ -102,18 +118,31 @@ if __name__ == '__main__':
             msg += chr(asciiChar)
         return msg
 
-    cipherText = "1100000111010000"
-    cipherLength = len(cipherText)
+    cipherText = "¬,ü.M"
+    binCipherText = cipherTextToBinary(cipherText)
+    # 1101000011000001
+    # 0010111100111110
+    # 0101111001111100
+    # 0000000000001001 - key
+    # 1010000110001010 - XNOR
 
-    key = DH()
-    bin_key = (cipherLength-len(str(bin(key)[2:])))*'0' + str(bin(key)[2:])
+    binCipherLength = len(binCipherText)
+
+    key = DH() #9 - 0000000000001001
+    bin_key = (binCipherLength-len(str(bin(key)[2:])))*'0' + str(bin(key)[2:])
+    # print (bin_key)
 
 
-    swappedCipherText = swap(cipherText)
+    swappedCipherText = swap(binCipherText)
+    # print(swappedCipherText)
     onesComplimented = onesCompliment(swappedCipherText)
-    leftShiftedCipher = left_shift1(onesComplimented)
-    xnoredCipher = xnor_ing(leftShiftedCipher, bin_key, cipherLength)
+    # print(onesComplimented)
+    rightShiftedCipher = right_shift1(onesComplimented)
+    # print(rightShiftedCipher)
+    xnoredCipher = xnor_ing(rightShiftedCipher, bin_key, binCipherLength)
+    # print(xnoredCipher)
     chunksOfCipher = splitIntoChunks(xnoredCipher)
+    # print(chunksOfCipher)
     plainText = binCipherToPlaintext (chunksOfCipher)
     print(plainText)
 

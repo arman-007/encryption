@@ -88,30 +88,60 @@ if __name__ == '__main__':
 
     def swap(bitString):
         x = len(bitString)
-        set1 = bitString[slice(0, len(bitString)//2)]
-        set2 = bitString[slice(len(bitString)//2, len(bitString))]
+        set1 = bitString[slice(0, x//2)]
+        set2 = bitString[slice(x//2, x)]
         swappedString = set2 + set1
         return swappedString
+
+    def splitIntoChunks (cipher):
+        n = 8 #length of chunk
+        chunks = [cipher[i:i+n] for i in range(0, len(cipher), n)]
+        return chunks
+
+    def binaryToDecimal(n):
+        return int(n,2)
+
+    def binCipherToPlaintext (cipher):
+        msg = ""
+        for bin_num in cipher:
+            asciiChar = binaryToDecimal(bin_num)
+            msg += chr(asciiChar)
+        return msg
+
+    def plainTextToBinary (plaintext):
+        ascii_str = ' '.join(list(map(str, map(ord, plaintext))))
+        ascii_str_list = ascii_str.split()
+        ascii_int_list = list(map(int, ascii_str_list))
+        ascii_bin_list = [bin(num)[2:] for num in ascii_int_list]
+
+        for element in ascii_bin_list:
+            if len(element) < 8:
+                ascii_bin_list[ascii_bin_list.index(element)] = (8-len(element))*'0'+element
+
+        bin_plaintext = ''.join(ascii_bin_list)
+        return bin_plaintext
 
     key = DH()
 
     # print(bin_key)
 
-    plaintext = "hi"
+    plaintext = "arman"
 
     # ascii_num = list(map(ord,plaintext))
     # print(ascii_num)
 
-    ascii_str = ' '.join(list(map(str, map(ord, plaintext))))
-    ascii_str_list = ascii_str.split()
-    ascii_int_list = list(map(int, ascii_str_list))
-    ascii_bin_list = [bin(num)[2:] for num in ascii_int_list]
+    # ascii_str = ' '.join(list(map(str, map(ord, plaintext))))
+    # ascii_str_list = ascii_str.split()
+    # ascii_int_list = list(map(int, ascii_str_list))
+    # ascii_bin_list = [bin(num)[2:] for num in ascii_int_list]
 
-    for element in ascii_bin_list:
-        if len(element) < 8:
-            ascii_bin_list[ascii_bin_list.index(element)] = (8-len(element))*'0'+element
+    # for element in ascii_bin_list:
+    #     if len(element) < 8:
+    #         ascii_bin_list[ascii_bin_list.index(element)] = (8-len(element))*'0'+element
 
-    bin_plaintext = ''.join(ascii_bin_list)
+    # bin_plaintext = ''.join(ascii_bin_list)
+    bin_plaintext = plainTextToBinary(plaintext)
+
     # print(bin_plaintext) 
     # 0110100001101001
 
@@ -128,10 +158,15 @@ if __name__ == '__main__':
     # print(oneBitShiftedBinaryString)
     oneComplimentedString = onesCompliment(oneBitShiftedBinaryString)
     swappedString = swap(oneComplimentedString)
-    print(swappedString)
+    # print(swappedString)
+    chunksOfCipher = splitIntoChunks(swappedString)
+    cipherText = binCipherToPlaintext (chunksOfCipher)
     # print(len(bin_key))
-    # print(bin_text_length)
+    print(cipherText)
     # print(type(bin_plaintext))
 
+# 0110100001101001
+# 0110100001101001 - binary Plain text
+# 1100000111010000 - binary Cipher
 # end = time.time()
 # print("The time of execution of above program is :",(end-start) * 10**3, "ms")
